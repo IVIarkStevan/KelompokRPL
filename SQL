@@ -1,0 +1,82 @@
+create Table PenggalangDana
+    (
+    "PDanaID"    Varchar2(10) Not Null, 
+    "username"   Varchar2(50),
+    "nama_PD"    Varchar2(20),
+    no_hp       number
+    "email"     varchar2(20),
+    "no_ktp"    Varchar2(15),
+    "foto_ktp"  varchar2(),
+    "password"  varchar2(20)
+    );
+Alter Table PenggalangDana Add Constrain PenggalangDana_PK Primary Key ("PDanaID");
+
+create Table Donatur
+    (
+    "DonaturID" varchar2(20) Not Null,
+    "username"  varchar2(20),
+    "password"  varchar(20),
+    "email"    varchar(20),
+    no_hp       number
+    );
+Alter Table Donatur Add Constrain  Donatur_PK Primary Key ("DonaturID");
+
+Create Table Admin
+    (
+    "AdminID " Varchar2(20),
+    "password " Varchar2(20)
+    );
+Alter Table Admin Add Constrain Admin_PK Primary Key ("AdminID ")
+
+Create Table Event
+    (
+    "EventID"     varchar2(20) Not Null,
+    "nama_event"  varchar2(30),
+    "durasi"      varchar2(10),
+    "target"      varchar2(15),
+    "bukti"       varchar2(20),
+    "deskripsi"   varchar2(40)
+    );
+Alter Table Event Add Constrain Event_PK Primary Key ("EventID ")
+
+Create Table Donasi
+    (
+    "DonasiID " varchar2(20) Not Null,
+    "EventID " varchar2(20),
+    "MetodePembayaran"  varchar2(10),
+    "NominalDonasi" number
+    );
+Alter Table Donasi Add Constrain Donasi_PK Primary Key ("DonasiID ")
+
+
+Create Table Mengatur 
+    (
+    "AdminID" varchar2(20), 
+    "DonaturID" varchar2(20),
+    "PDanaID" varchar2(20),
+    "EventID" varchar2(20),
+    );
+Alter Table Mengatur Add Constrain Mengatur_PK Primary Key ("AdminID")
+
+Create Table Membayar 
+    (
+    "DonasiID" varchar2(20),
+    "DonaturID" varchar2(20)
+    );
+Alter Table Membayar Add Constrain Membayar_PK Primary Key ("DonasiID")
+
+Create Table Membuat 
+    (
+    "EventID" varchar2(20),
+    "PDanaID" varchar2(20)
+    );
+Alter Table Membuat Add Constrain Membuat_PK Primary Key ("EventID")
+
+Alter Table Membayar Add Constraint DonaturID_FK Foreign Key ("DonaturID") References Donatur ("DonaturID");
+Alter Table Membayar Add Constraint DonasiID_FK Foreign Key ("DonasiID") References Donasi ("DonasiID");
+Alter Table Mengatur Add Constraint AdminID_FK Foreign Key ("AdminID") References Admin ("AdminID");
+Alter Table Mengatur Add Constraint DonaturID_FK Foreign Key ("DonaturID") References Donatur ("DonaturID");
+Alter Table Mengatur Add Constraint PDanaID_FK Foreign Key ("PDanaID") References PenggalangDana ("PDanaID");
+Alter Table Mengatur Add Constraint EventID_FK Foreign Key ("EventID") References Event ("EventID");
+Alter Table Membuat Add Constraint EventID_FK Foreign Key ("EventID") References Event ("EventID");
+Alter Table Membuat Add Constraint PDanaID_FK Foreign Key ("PDanaID") References PenggalangDana ("PDanaID");
